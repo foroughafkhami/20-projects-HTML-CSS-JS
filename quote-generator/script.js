@@ -17,8 +17,10 @@ function loading() {
 // Hide loading
 
 function complete() {
-  loader.hidden = true;
-  quoteContainer.hidden = false;
+  if (!loader.hidden) {
+    quoteContainer.hidden = false;
+    loader.hidden = true;
+  }
 }
 function newQuote() {
   loading();
@@ -42,9 +44,11 @@ function newQuote() {
 }
 async function getQuotes() {
   loading();
+  // use proxy if you have cors error
+  // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
   const apiUrl = "https://dummyjson.com/quotes";
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(/*proxyUrl +*/ apiUrl);
     apiQuotes = await response.json();
 
     newQuote();
