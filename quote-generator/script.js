@@ -6,24 +6,20 @@ const newQuoteBtn = document.getElementById("new-quote");
 const loader = document.getElementById("loader");
 // Get Quotes from API
 let apiQuotes = [];
-// Show new Quote
 
-// Show Loading
-function loading() {
+function showLoadingSpinner() {
   loader.hidden = false;
   quoteContainer.hidden = true;
 }
 
-// Hide loading
-
-function complete() {
+function removeLoadingSpinner() {
   if (!loader.hidden) {
     quoteContainer.hidden = false;
     loader.hidden = true;
   }
 }
 function newQuote() {
-  loading();
+  showLoadingSpinner();
   // pick a random quote from apiQuotes array
   const quote =
     apiQuotes.quotes[Math.floor(Math.random() * apiQuotes.quotes.length)];
@@ -40,20 +36,20 @@ function newQuote() {
   }
   // Set Quote,hide loader
   quoteText.textContent = quote.quote;
-  complete();
+  removeLoadingSpinner();
 }
 async function getQuotes() {
-  loading();
+  showLoadingSpinner();
   // use proxy if you have cors error
   // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
   const apiUrl = "https://dummyjson.com/quotes";
   try {
     const response = await fetch(/*proxyUrl +*/ apiUrl);
     apiQuotes = await response.json();
-
     newQuote();
   } catch (error) {
     // Catch error here
+    getQuotes();
   }
 }
 
