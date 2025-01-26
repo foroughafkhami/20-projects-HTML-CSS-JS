@@ -15,13 +15,11 @@ body {
 .button-container {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 button {
-  transform: translate(-50px, 40px);
-  cursor: pointer;
-  outline: none;
-  width: 200px;
-  height: 50px;
+  transform: translate(90%, -630%);
   font-family: Barlow, sans-serif;
   font-weight: bold;
   font-size: 25px;
@@ -38,4 +36,18 @@ button:hover {
 button:active {
   transform: translateY(-50px, 43px);
   box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (max-width: 700px) {
+  .button-container {
+    margin-left: -20%;
+  }
+  button {
+    font-size: 20px;
+  }
+  img {
+    width: 40vw;
+    height: 40vh;
+    aspect-ratio: 100;
+  }
 }
