@@ -13,6 +13,7 @@ let countdownTitle = "";
 let countdownDate = "";
 let countdownValue = Date;
 let countdownActive;
+let savedCountdown;
 
 const second = 1000;
 const minute = second * 60;
@@ -31,7 +32,6 @@ function updateDom() {
     const hours = Math.floor((distance % day) / hour);
     const minutes = Math.floor((distance % hour) / minute);
     const seconds = Math.floor((distance % minute) / second);
-    console.log(days, hours, minutes, seconds);
 
     // Hide Input
     inputCountainer.hidden = true;
@@ -60,11 +60,15 @@ function updateCountdown(e) {
   e.preventDefault();
   countdownTitle = e.srcElement[0].value;
   countdownDate = e.srcElement[1].value;
+  savedCountdown = {
+    title: countdownTitle,
+    date: countdownDate,
+  };
+  localStorage.setItem("countdown", JSON.stringify(savedCountdown));
   // Check for validate
   if (countdownDate === "") {
     alert("Please select a date for the countdown");
   } else {
-    console.log(countdownTitle, countdownDate);
     // Get number version of current date,updateDom
     countdownValue = new Date(countdownDate).getTime();
     updateDom();
@@ -82,8 +86,24 @@ function reset() {
   // Reset values
   countdownTitle = "";
   countdownDate = "";
+  localStorage.removeItem("countdown");
+}
+
+function restorePreviousCountdown() {
+  // GEt countdown from localStorage if available
+  if (localStorage.getItem("countdown")) {
+    inputCountainer.hidden = true;
+    savedCountdown = JSON.parse(localStorage.getItem("countdown"));
+    countdownTitle = savedCountdown.title;
+    countdownDate = savedCountdown.date;
+    countdownValue = new Date(countdownDate).getTime();
+    updateDom();
+  }
 }
 // Event Listeners
 countdownForm.addEventListener("submit", updateCountdown);
 countdownBtn.addEventListener("click", reset);
 completeBtn.addEventListener("click", reset);
+
+// On Load, check local storage
+restorePreviousCountdown();
