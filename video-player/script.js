@@ -1,3 +1,4 @@
+const player = document.querySelector(".player");
 const video = document.querySelector("video");
 const progressRange = document.querySelector(".progress-range");
 const progressBar = document.querySelector(".progress-bar");
@@ -8,7 +9,7 @@ const volumeBar = document.querySelector(".volume-bar");
 const currentTime = document.querySelector(".time-elapsed");
 const duration = document.querySelector(".time-duration");
 const fullscreenBtn = document.querySelector(".fullscreen");
-
+const speed = document.querySelector(".player-speed");
 // Play / Pause
 function showPlayIcon() {
   playBtn.classList.replace("fa-pause", "fa-play");
@@ -90,6 +91,56 @@ function toggleMute() {
     volumeIcon.setAttribute("title", "mute");
   }
 }
+
+// Change Playback Speed
+function changeSpeed() {
+  video.playbackRate = speed.value;
+}
+
+// Fullscreen
+// View in fullscreen
+function openFullscreen(elem) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    // Firefix
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    // Chrome,Safari,Opera
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    // IE/Edge
+    elem.msRequestFullscreen();
+  }
+  video.classList.add("video-fullscreen");
+}
+
+// View in fullscreen
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    // Firefix
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    // Chrome,Safari,Opera
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    // IE/Edge
+    document.msExitFullscreen();
+  }
+  video.classList.remove("video-fullscreen");
+}
+let fullscreen = false;
+// Toggle Fullscreen
+function toggleFullscreen() {
+  if (!fullscreen) {
+    openFullscreen(player);
+  } else {
+    closeFullscreen();
+  }
+  fullscreen = !fullscreen;
+}
 // On Video End, show play button icon
 video.addEventListener("ended", showPlayIcon);
 // Event Listeners
@@ -100,3 +151,5 @@ video.addEventListener("canPlay", updateProgress);
 progressRange.addEventListener("click", setProgress);
 volumeRange.addEventListener("click", changeVolume);
 volumeIcon.addEventListener("click", toggleMute);
+speed.addEventListener("change", changeSpeed);
+fullscreenBtn.addEventListener("click", toggleFullscreen);
