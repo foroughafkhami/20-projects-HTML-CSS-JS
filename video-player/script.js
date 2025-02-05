@@ -26,9 +26,19 @@ function togglePlay() {
 }
 
 // Progress Bar
+// Calculate displaay time format
+function displayTime(time) {
+  const minutes = Math.floor(time / 60);
+  let seconds = Math.floor(time % 60);
+  seconds = seconds > 9 ? seconds : `0${seconds}`;
+  return `${minutes}:${seconds}`;
+}
 // Update progress bar as video plays
 function updateProgress() {
   progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`;
+  currentTime.textContent = `${displayTime(video.currentTime)}/
+  `;
+  duration.textContent = `${displayTime(video.duration)}`;
 }
 
 // On Video End, show play button icon
