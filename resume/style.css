@@ -38,7 +38,7 @@ hr {
 #profile-photo {
   position: relative;
   width: auto;
-  height: 180px;
+  height: 320px;
   border-radius: 10px;
 }
 #image > a {
@@ -77,10 +77,18 @@ hr {
   font-weight: bolder;
   font-family: "Open Sans", sans-serif;
 }
-#email {
+#email,
+#phone,
+#address {
   font-size: 15px !important;
   font-weight: bold !important;
   font-family: "Cutive Mono", monospace;
+}
+#info {
+  padding: 0;
+}
+#info li {
+  list-style-type: none;
 }
 .about-parg {
   text-align: justify;
@@ -91,7 +99,7 @@ hr {
 #education,
 #more-about,
 #phone,
-#email {
+#address {
   color: #555;
   font-size: 13.5px;
 }
